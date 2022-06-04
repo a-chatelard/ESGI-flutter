@@ -38,6 +38,7 @@ dependencies:
   firebase_auth: ^3.3.19
   sizer: ^2.0.15
   flutter_svg: ^1.1.0
+  flutter_bloc: ^8.0.1
 
 dev_dependencies:
   flutter_test:
@@ -55,7 +56,8 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
-
+  assets:
+    - assets/svg/
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
