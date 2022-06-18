@@ -7,7 +7,7 @@ class FirebaseAuthProvider {
 
   Future signIn(String email, String password) async {
     try {
-      final credential = await _firebaseAuth.signInWithEmailAndPassword(
+      await _firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found' || e.code == 'wrong-password') {
