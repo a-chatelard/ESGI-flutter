@@ -1,5 +1,9 @@
 import 'package:esgiflutter/app/modules/auth/bloc/auth_bloc.dart';
 import 'package:esgiflutter/app/modules/auth/data/repository/auth_repository.dart';
+import 'package:esgiflutter/app/screen/dashboard/dashboard_screen.dart';
+import 'package:esgiflutter/app/screen/login/login_screen.dart';
+import 'package:esgiflutter/app/screen/register/widgets/register_form.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'app/app_routes.dart';
@@ -19,20 +23,27 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RepositoryProvider(
-      create: (context) => AuthRepository(),
-      child: BlocProvider(
-        create: (context) => AuthBloc(
-          authRepository: RepositoryProvider.of<AuthRepository>(context),
-        ),
-        child: Sizer(builder: (context, orientation, deviceType) {
-          return MaterialApp(
-              debugShowCheckedModeBanner: false,
-              title: 'Flutter Demo',
-              theme: theme,
-              initialRoute: loginRoute,
-              routes: routes);
-        }),
-      ),
-    );
+        create: (context) => AuthRepository(),
+        child: BlocProvider(
+          create: (context) => AuthBloc(
+            authRepository: RepositoryProvider.of<AuthRepository>(context),
+          ),
+          child: Sizer(builder: (context, orientation, deviceType) {
+            return MaterialApp(
+                debugShowCheckedModeBanner: false,
+                title: 'Flutter Demo',
+                theme: theme,
+                routes: routes,
+                home: StreamBuilder<User?>(
+                    stream: FirebaseAuth.instance.authStateChanges(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return const DashboardScreen();
+                      } else {
+                        return const LoginScreen();
+                      }
+                    }));
+          }),
+        ));
   }
 }

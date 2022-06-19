@@ -63,7 +63,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '883560821211',
     projectId: 'esgi-flutter',
     storageBucket: 'esgi-flutter.appspot.com',
-    iosClientId: '883560821211-16gka3qn5p534ujrj5n1926q327mimn9.apps.googleusercontent.com',
+    iosClientId:
+        '883560821211-16gka3qn5p534ujrj5n1926q327mimn9.apps.googleusercontent.com',
     iosBundleId: 'com.example.esgiflutter',
   );
 }

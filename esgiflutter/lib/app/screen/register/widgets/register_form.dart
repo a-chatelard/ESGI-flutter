@@ -1,24 +1,23 @@
 import 'package:esgiflutter/app/app_routes.dart';
+import 'package:esgiflutter/app/modules/auth/bloc/auth_bloc.dart';
+import 'package:esgiflutter/app/modules/auth/bloc/auth_event.dart';
+import 'package:esgiflutter/app/modules/auth/bloc/auth_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:sizer/sizer.dart';
 
-import '../../../modules/auth/bloc/auth_bloc.dart';
-import '../../../modules/auth/bloc/auth_event.dart';
-import '../../../modules/auth/bloc/auth_state.dart';
-
-class LoginForm extends StatelessWidget {
-  LoginForm({Key? key}) : super(key: key);
+class RegisterForm extends StatelessWidget {
+  RegisterForm({Key? key}) : super(key: key);
 
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
-  void _authenticateWithEmailAndPassword(context) {
+  void _createAccountWithEmailAndPassword(context) {
     if (_formKey.currentState!.validate()) {
       BlocProvider.of<AuthBloc>(context).add(
-          SignInRequested(_emailController.text, _passwordController.text));
+          SignUpRequested(_emailController.text, _passwordController.text));
     }
   }
 
@@ -40,7 +39,7 @@ class LoginForm extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SvgPicture.asset(
-              'assets/svg/sign-in.svg',
+              'assets/svg/sign-up.svg',
               height: 30.h,
             ),
             SizedBox(height: 10.h),
@@ -51,23 +50,21 @@ class LoginForm extends StatelessWidget {
             ),
             SizedBox(height: 3.h),
             TextFormField(
-              decoration: const InputDecoration(
-                  labelText: 'Password',
-                  suffixIcon: Icon(Icons.visibility_off)),
+              decoration: const InputDecoration(labelText: 'Password'),
               controller: _passwordController,
             ),
             SizedBox(height: 3.h),
             ElevatedButton(
                 onPressed: () {
-                  _authenticateWithEmailAndPassword(context);
+                  _createAccountWithEmailAndPassword(context);
                 },
-                child: const Text('Sign in')),
+                child: const Text('Sign up')),
             SizedBox(height: 3.h),
             TextButton(
                 onPressed: () {
-                  Navigator.pushReplacementNamed(context, registerRoute);
+                  Navigator.pushReplacementNamed(context, loginRoute);
                 },
-                child: const Text("Don't have an account ? Sign up"))
+                child: const Text("Already have an account ? Sign in"))
           ],
         ),
       ),

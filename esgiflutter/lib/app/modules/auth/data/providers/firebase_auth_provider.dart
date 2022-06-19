@@ -12,6 +12,8 @@ class FirebaseAuthProvider {
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found' || e.code == 'wrong-password') {
         throw Exception('Échec d\'authentification');
+      } else {
+        rethrow;
       }
     } catch (e) {
       throw Exception(e);
