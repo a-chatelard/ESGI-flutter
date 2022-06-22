@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:sizer/sizer.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class RegisterForm extends StatelessWidget {
   RegisterForm({Key? key}) : super(key: key);
@@ -50,7 +51,8 @@ class RegisterForm extends StatelessWidget {
             ),
             SizedBox(height: 3.h),
             TextFormField(
-              decoration: const InputDecoration(labelText: 'Password'),
+              decoration: InputDecoration(
+                  labelText: AppLocalizations.of(context)!.password),
               controller: _passwordController,
             ),
             SizedBox(height: 3.h),
@@ -58,13 +60,13 @@ class RegisterForm extends StatelessWidget {
                 onPressed: () {
                   _createAccountWithEmailAndPassword(context);
                 },
-                child: const Text('Sign up')),
+                child: Text(AppLocalizations.of(context)!.confirm)),
             SizedBox(height: 3.h),
             TextButton(
                 onPressed: () {
                   Navigator.pushReplacementNamed(context, loginRoute);
                 },
-                child: const Text("Already have an account ? Sign in"))
+                child: Text(AppLocalizations.of(context)!.haveAccount))
           ],
         ),
       ),

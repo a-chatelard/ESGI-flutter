@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:sizer/sizer.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../modules/auth/bloc/auth_bloc.dart';
 import '../../../modules/auth/bloc/auth_event.dart';
@@ -51,9 +52,9 @@ class LoginForm extends StatelessWidget {
             ),
             SizedBox(height: 3.h),
             TextFormField(
-              decoration: const InputDecoration(
-                  labelText: 'Password',
-                  suffixIcon: Icon(Icons.visibility_off)),
+              decoration: InputDecoration(
+                  labelText: AppLocalizations.of(context)!.password,
+                  suffixIcon: const Icon(Icons.visibility_off)),
               controller: _passwordController,
             ),
             SizedBox(height: 3.h),
@@ -61,13 +62,13 @@ class LoginForm extends StatelessWidget {
                 onPressed: () {
                   _authenticateWithEmailAndPassword(context);
                 },
-                child: const Text('Sign in')),
+                child: Text(AppLocalizations.of(context)!.signIn)),
             SizedBox(height: 3.h),
             TextButton(
                 onPressed: () {
                   Navigator.pushReplacementNamed(context, registerRoute);
                 },
-                child: const Text("Don't have an account ? Sign up"))
+                child: Text(AppLocalizations.of(context)!.noAccount))
           ],
         ),
       ),

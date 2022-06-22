@@ -1,0 +1,15 @@
+{
+  "helloWorld": "Bonjour le monde!",
+  "@helloWorld": {
+    "description": "Le salut conventionnel du nouveau développpeur."
+  },
+  "signIn": "Connexion",
+  "signUp": "Inscription",
+  "signOut": "Déconnexion",
+  "add": "Ajouter",
+  "confirm": "Confirmer",
+  "password": "Mot de passe",
+  "noAccount": "Pas encore de compte ? Créez-en un",
+  "haveAccount": "Déjà inscrit(e) ? Connectez-vous",
+  "home": "Accueil"
+}

@@ -1,0 +1,15 @@
+{
+  "helloWorld": "Hello World!",
+  "@helloWorld": {
+    "description": "The conventional newborn programmer greeting."
+  },
+  "signIn": "Sign in",
+  "signUp": "Sign up",
+  "signOut": "Sign out",
+  "add": "Add",
+  "confirm": "Confirm",
+  "password": "Password",
+  "noAccount": "Don't have an accout ? Sign up",
+  "haveAccount": "Already have an account ? Sign in",
+  "home": "Home"
+}

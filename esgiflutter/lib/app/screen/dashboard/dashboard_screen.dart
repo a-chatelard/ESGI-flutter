@@ -1,10 +1,9 @@
 import 'package:esgiflutter/app/app_routes.dart';
+import 'package:esgiflutter/app/modules/auth/bloc/auth_bloc.dart';
+import 'package:esgiflutter/app/modules/auth/bloc/auth_event.dart';
 import 'package:esgiflutter/app/modules/auth/bloc/auth_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../modules/auth/bloc/auth_bloc.dart';
-import '../../modules/auth/bloc/auth_event.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({Key? key}) : super(key: key);
@@ -22,7 +21,7 @@ class DashboardScreen extends StatelessWidget {
         }
       }),
       child: Scaffold(
-          appBar: AppBar(title: const Text('Dashboard')),
+          appBar: AppBar(title: const Text('Ma collection')),
           body: Column(
             children: [
               const Text("Dashboard"),
