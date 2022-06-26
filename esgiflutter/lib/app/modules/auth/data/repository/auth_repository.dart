@@ -1,4 +1,5 @@
 import 'package:esgiflutter/app/modules/auth/data/providers/firebase_auth_provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthRepository {
   final FirebaseAuthProvider _firebaseAuth = FirebaseAuthProvider();
@@ -13,5 +14,9 @@ class AuthRepository {
 
   disconnect() async {
     await _firebaseAuth.signOut();
+  }
+
+  User? getCurrentUser() {
+    return _firebaseAuth.getCurrentUser();
   }
 }

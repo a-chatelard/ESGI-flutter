@@ -4,8 +4,9 @@ import 'package:esgiflutter/app/modules/auth/bloc/auth_state.dart';
 import 'package:esgiflutter/app/modules/auth/data/repository/auth_repository.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  final AuthRepository authRepository;
-  AuthBloc({required this.authRepository}) : super(UnAuthenticated()) {
+  final AuthRepository authRepository = AuthRepository();
+  
+  AuthBloc() : super(UnAuthenticated()) {
     on<SignInRequested>((event, emit) async {
       emit(Loading());
       try {

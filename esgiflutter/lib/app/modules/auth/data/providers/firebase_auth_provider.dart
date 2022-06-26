@@ -42,4 +42,8 @@ class FirebaseAuthProvider {
       throw Exception(e);
     }
   }
+
+  User? getCurrentUser() {
+    return _firebaseAuth.currentUser;
+  }
 }
