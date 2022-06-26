@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:esgiflutter/app/modules/auth/data/providers/firebase_auth_provider.dart';
 import 'package:esgiflutter/app/modules/notes/data/repository/note_repository.dart';
 
 import '../data/models/note.dart';
@@ -26,6 +25,14 @@ class NoteBloc extends Bloc<NoteEvent, NoteState> {
         await noteRepository.update(event.note);
         emit(NoteUpdatedState());
       } catch (e) {
+        emit(NoteErrorState(e.toString()));
+      }
+    });
+    on<DeleteNoteEvent>((event, emit) async {
+      try {
+        await noteRepository.delete(event.note);
+        emit(NoteDeletedState());
+      } catch (e){
         emit(NoteErrorState(e.toString()));
       }
     });

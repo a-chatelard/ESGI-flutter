@@ -17,6 +17,12 @@ class UpdateNoteEvent extends NoteEvent {
   UpdateNoteEvent(this.note);
 }
 
+class DeleteNoteEvent extends NoteEvent {
+  final Note note;
+
+  DeleteNoteEvent(this.note);
+}
+
 class GetAllNotesEvent extends NoteEvent {
   @override
   List<Object> get props => [];

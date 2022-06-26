@@ -1,8 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:esgiflutter/app/modules/notes/data/models/note.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/cupertino.dart';
 
 class FirestoreNoteProvider {
   String? _userId;
@@ -31,5 +29,10 @@ class FirestoreNoteProvider {
     _userId = FirebaseAuth.instance.currentUser?.uid;
 
     notesRef.doc(_userId).collection("notes").doc(note.id).update(note.toJson());
+  }
+
+  Future deleteNote(Note note) async {
+    _userId = FirebaseAuth.instance.currentUser?.uid;
+    notesRef.doc(_userId).collection("notes").doc(note.id).delete();
   }
 }

@@ -12,6 +12,11 @@ class NoteRepository {
     await _provider.updateNote(note);
   }
 
+  delete(Note note) async {
+    await _provider.deleteNote(note);
+
+  }
+
   Future<List<Note>> getNotes() async {
     return await _provider.getNotes();
   }
