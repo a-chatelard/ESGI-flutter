@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 class AuthRepository {
   final FirebaseAuthProvider _firebaseAuth = FirebaseAuthProvider();
 
+
   login(String email, String password) async {
     await _firebaseAuth.signIn(email, password);
   }
@@ -18,5 +19,9 @@ class AuthRepository {
 
   User? getCurrentUser() {
     return _firebaseAuth.getCurrentUser();
+  }
+
+  resetPassword({required String email}) {
+    return _firebaseAuth.resetPassword(email);
   }
 }

@@ -11,7 +11,7 @@ import 'package:sizer/sizer.dart';
 
 class DashboardScreen extends StatelessWidget {
   DashboardScreen({Key? key}) : super(key: key);
-  
+
   final AuthBloc authBloc = locator<AuthBloc>();
   final NoteBloc noteBloc = locator<NoteBloc>();
 
@@ -21,11 +21,11 @@ class DashboardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<AuthBloc,AuthState>(
+    return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
-          if (state is UnAuthenticated || state is AuthError) {
-            Navigator.pushReplacementNamed(context, loginRoute);
-          }
+        if (state is UnAuthenticated || state is AuthError) {
+          Navigator.pushReplacementNamed(context, loginRoute);
+        }
       },
       child: Scaffold(
         body: Column(
@@ -49,22 +49,22 @@ class DashboardScreen extends StatelessWidget {
                   SizedBox(
                     height: 30.h,
                     child: BlocBuilder<NoteBloc, NoteState>(
-                      builder: (context, state) {
-                        if (state is Loading) {
-                          return const CircularProgressIndicator();
-                        } else if (state is NoteListSuccessState) {
-                          return ListView.builder(
+                        builder: (context, state) {
+                      if (state is Loading) {
+                        return const CircularProgressIndicator();
+                      } else if (state is NoteListSuccessState) {
+                        return ListView.builder(
                             scrollDirection: Axis.vertical,
                             itemCount: state.notes.length,
                             itemBuilder: (context, index) {
                               return NoteCard(note: state.notes[index]);
                             });
-                        } else if (state is NoteErrorState) {
-                          return const Text("Error");
-                        }
-                        noteBloc.add(GetAllNotesEvent());
-                        return const CircularProgressIndicator();
-                      }),
+                      } else if (state is NoteErrorState) {
+                        return const Text("Error");
+                      }
+                      noteBloc.add(GetAllNotesEvent());
+                      return const CircularProgressIndicator();
+                    }),
                   ),
                   /*SizedBox(height: 3.h),
                   ListView(
@@ -104,11 +104,10 @@ class DashboardScreen extends StatelessWidget {
                         ),
                       )*/
                   ElevatedButton(
-                    onPressed: () {
-                      _signOut(context);
-                    },
-                    child: null
-                  )
+                      onPressed: () {
+                        _signOut(context);
+                      },
+                      child: null)
                 ],
               ),
             ),
@@ -148,4 +147,3 @@ class DashboardScreen extends StatelessWidget {
     );
   }
 }
-
