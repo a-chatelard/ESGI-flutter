@@ -4,7 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 class FirestoreNoteProvider {
   String? _userId;
-  final CollectionReference notesRef = FirebaseFirestore.instance.collection("user_notes");
+  final CollectionReference notesRef =
+      FirebaseFirestore.instance.collection("user_notes");
 
   Future addNote(Note note) async {
     _userId = FirebaseAuth.instance.currentUser?.uid;
@@ -15,7 +16,7 @@ class FirestoreNoteProvider {
     _userId = FirebaseAuth.instance.currentUser?.uid;
 
     var notesCollection = await notesRef.doc(_userId).collection("notes").get();
-    
+
     var notes = <Note>[];
 
     for (var doc in notesCollection.docs) {
@@ -28,11 +29,17 @@ class FirestoreNoteProvider {
   Future updateNote(Note note) async {
     _userId = FirebaseAuth.instance.currentUser?.uid;
 
-    notesRef.doc(_userId).collection("notes").doc(note.id).update(note.toJson());
+    await notesRef
+        .doc(_userId)
+        .collection("notes")
+        .doc(note.id)
+        .update(note.toJson());
   }
 
   Future deleteNote(Note note) async {
     _userId = FirebaseAuth.instance.currentUser?.uid;
-    notesRef.doc(_userId).collection("notes").doc(note.id).delete();
+    print(_userId);
+    print(note.id);
+    await notesRef.doc(_userId).collection("notes").doc(note.id).delete();
   }
 }
