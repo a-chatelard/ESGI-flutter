@@ -11,5 +11,6 @@
   "password": "Password",
   "noAccount": "Don't have an accout ? Sign up",
   "haveAccount": "Already have an account ? Sign in",
+  "forgotPassword": "Forgot password",
   "home": "Home"
 }

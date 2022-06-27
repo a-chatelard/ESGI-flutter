@@ -5,7 +5,7 @@ import 'package:esgiflutter/app/modules/auth/data/repository/auth_repository.dar
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final AuthRepository authRepository = AuthRepository();
-  
+
   AuthBloc() : super(UnAuthenticated()) {
     on<SignInRequested>((event, emit) async {
       emit(Loading());
@@ -34,10 +34,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       await authRepository.disconnect();
       emit(UnAuthenticated());
     });
+
     on<ResetPasswordRequested>((event, emit) async {
       emit(Loading());
-      await authRepository.resetPassword(
-          email: event.email);
+      try {
+        await authRepository.resetPassword(email: event.email);
+        emit(ResetPasswordMailSent());
+      } catch (e) {
+        emit(AuthError(e.toString()));
+      }
     });
   }
 }

@@ -17,7 +17,7 @@ class LoginForm extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  
+
   final AuthBloc authBloc = locator<AuthBloc>();
   final NoteBloc noteBloc = locator<NoteBloc>();
 
@@ -30,7 +30,7 @@ class LoginForm extends StatelessWidget {
 
   void _loadNotes() {
     noteBloc.add(GetAllNotesEvent());
-  }     
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +54,7 @@ class LoginForm extends StatelessWidget {
               'assets/svg/sign-in.svg',
               height: 30.h,
             ),
-            SizedBox(height: 10.h),
+            SizedBox(height: 8.h),
             TextFormField(
               decoration: const InputDecoration(
                   labelText: 'Email', suffixIcon: Icon(Icons.email_outlined)),
@@ -78,7 +78,12 @@ class LoginForm extends StatelessWidget {
                 onPressed: () {
                   Navigator.pushReplacementNamed(context, registerRoute);
                 },
-                child: Text(AppLocalizations.of(context)!.noAccount))
+                child: Text(AppLocalizations.of(context)!.noAccount)),
+            TextButton(
+                onPressed: () {
+                  Navigator.pushReplacementNamed(context, resetPasswordRoute);
+                },
+                child: Text(AppLocalizations.of(context)!.forgotPassword))
           ],
         ),
       ),

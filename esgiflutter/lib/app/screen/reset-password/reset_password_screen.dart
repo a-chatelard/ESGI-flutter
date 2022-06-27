@@ -1,3 +1,4 @@
+import 'package:esgiflutter/app/app_routes.dart';
 import 'package:esgiflutter/app/modules/auth/bloc/auth_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,11 +18,14 @@ class ResetPasswordScreen extends StatelessWidget {
     authBloc.add(ResetPasswordRequested(email));
   }
 
-
   @override
   Widget build(BuildContext context) {
     return BlocListener<AuthBloc, AuthState>(
-      listener: ((context, state) {}),
+      listener: ((context, state) {
+        if (state is ResetPasswordMailSent) {
+          Navigator.pushReplacementNamed(context, loginRoute);
+        }
+      }),
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Reset password'),
@@ -29,17 +33,16 @@ class ResetPasswordScreen extends StatelessWidget {
         body: Padding(
             padding: const EdgeInsets.symmetric(vertical: defaultPadding),
             child: Column(
-              children:  [
-                const Text(
-                  'Reset password',
-                  style: TextStyle(fontSize: 13),
-                ),
+              children: [
                 TextField(
                   controller: _emailController,
                   decoration: const InputDecoration(label: Text('Email')),
                 ),
-                ElevatedButton(onPressed: _sendResetPassword(_emailController.text), child: const Text("Send"))
-
+                ElevatedButton(
+                    onPressed: () {
+                      _sendResetPassword(_emailController.text);
+                    },
+                    child: const Text("Send"))
               ],
             )),
       ),
