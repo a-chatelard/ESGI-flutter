@@ -46,4 +46,12 @@ class FirebaseAuthProvider {
   User? getCurrentUser() {
     return _firebaseAuth.currentUser;
   }
+
+  Future<void> resetPassword(String email) async {
+    try {
+      await _firebaseAuth.sendPasswordResetEmail(email: email);
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
 }
