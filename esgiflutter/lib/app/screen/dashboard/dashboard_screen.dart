@@ -4,6 +4,7 @@ import 'package:esgiflutter/app/modules/auth/bloc/auth_event.dart';
 import 'package:esgiflutter/app/modules/auth/bloc/auth_state.dart';
 import 'package:esgiflutter/app/modules/notes/bloc/note_bloc.dart';
 import 'package:esgiflutter/app/screen/dashboard/widgets/note_card_widget.dart';
+import 'package:esgiflutter/app/screen/layout/nav_drawer_screen.dart';
 import 'package:esgiflutter/core/di/locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -28,6 +29,7 @@ class DashboardScreen extends StatelessWidget {
         }
       },
       child: Scaffold(
+        drawer: NavDrawer(),
         body: Column(
           children: [
             SizedBox(height: 10.h),
@@ -66,43 +68,6 @@ class DashboardScreen extends StatelessWidget {
                       return const CircularProgressIndicator();
                     }),
                   ),
-                  /*SizedBox(height: 3.h),
-                  ListView(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.vertical,
-                    children: [
-                      Text('Mes dossiers'),
-                      const Card(
-                        color: Colors.black,
-                        child: ListTile(
-                          title: Text(
-                            'Mon budget',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          leading: Icon(
-                            Icons.folder,
-                            color: Colors.white,
-                          ),
-                          trailing: Text('5'),
-                        ),
-                      ),
-                      const Card(
-                        color: Colors.black,
-                        child: ListTile(
-                          title: Text(
-                            'Exo de musculation',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          leading: Icon(
-                            Icons.folder,
-                            color: Colors.white,
-                          ),
-                          trailing: Text(
-                            '5',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ),
-                      )*/
                   ElevatedButton(
                       onPressed: () {
                         _signOut(context);
