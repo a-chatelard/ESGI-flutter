@@ -5,10 +5,9 @@ import 'package:esgiflutter/core/di/locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-
 class NoteDetailsScreen extends StatelessWidget {
   NoteDetailsScreen({Key? key}) : super(key: key);
-  
+
   final _formKey = GlobalKey<FormState>();
   final _titleController = TextEditingController();
   final _descriptionController = TextEditingController();
@@ -37,11 +36,13 @@ class NoteDetailsScreen extends StatelessWidget {
         }
       }),
       child: Scaffold(
-          appBar: AppBar(
-            title: Text(note.id.toString()),
-          ),
-          body: Padding(
-            padding: const EdgeInsets.symmetric(vertical: defaultPadding),
+        appBar: AppBar(
+          title: Text(note.id.toString()),
+        ),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(vertical: defaultPadding),
+          child: Form(
+            key: _formKey,
             child: Column(
               children: [
                 TextField(
@@ -63,11 +64,13 @@ class NoteDetailsScreen extends StatelessWidget {
                       hintText: "Saisir une note",
                       focusedBorder: OutlineInputBorder()),
                 ),
-                ElevatedButton(onPressed: _updateNote, child: const Text("Update"))
+                ElevatedButton(
+                    onPressed: _updateNote, child: const Text("Update"))
               ],
             ),
           ),
         ),
+      ),
     );
   }
 }

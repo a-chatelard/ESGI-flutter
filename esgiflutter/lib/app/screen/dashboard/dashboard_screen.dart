@@ -3,11 +3,13 @@ import 'package:esgiflutter/app/modules/auth/bloc/auth_bloc.dart';
 import 'package:esgiflutter/app/modules/auth/bloc/auth_event.dart';
 import 'package:esgiflutter/app/modules/auth/bloc/auth_state.dart';
 import 'package:esgiflutter/app/modules/notes/bloc/note_bloc.dart';
+import 'package:esgiflutter/app/modules/notes/data/models/note.dart';
 import 'package:esgiflutter/app/screen/dashboard/widgets/note_card_widget.dart';
 import 'package:esgiflutter/app/screen/layout/nav_drawer_screen.dart';
 import 'package:esgiflutter/core/di/locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:sizer/sizer.dart';
 
 class DashboardScreen extends StatelessWidget {
@@ -18,6 +20,10 @@ class DashboardScreen extends StatelessWidget {
 
   void _signOut(context) {
     authBloc.add(SignOutRequested());
+  }
+
+  void _deleteNote(Note note) {
+    noteBloc.add(DeleteNoteEvent(note));
   }
 
   @override
@@ -32,7 +38,7 @@ class DashboardScreen extends StatelessWidget {
         drawer: NavDrawer(),
         body: Column(
           children: [
-            SizedBox(height: 10.h),
+            SizedBox(height: 7.h),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 7.w),
               child: Column(
@@ -52,14 +58,26 @@ class DashboardScreen extends StatelessWidget {
                     height: 30.h,
                     child: BlocBuilder<NoteBloc, NoteState>(
                         builder: (context, state) {
-                      if (state is Loading) {
-                        return const CircularProgressIndicator();
-                      } else if (state is NoteListSuccessState) {
+                      if (state is NoteListSuccessState) {
                         return ListView.builder(
                             scrollDirection: Axis.vertical,
                             itemCount: state.notes.length,
                             itemBuilder: (context, index) {
-                              return NoteCard(note: state.notes[index]);
+                              return Slidable(
+                                  key: ValueKey(index),
+                                  startActionPane: ActionPane(
+                                    motion: const ScrollMotion(),
+                                    children: [
+                                      SlidableAction(
+                                          onPressed: (context) {
+                                            _deleteNote(state.notes[index]);
+                                          },
+                                          backgroundColor: Colors.red,
+                                          icon: Icons.delete,
+                                          label: "Supprimer"),
+                                    ],
+                                  ),
+                                  child: NoteCard(note: state.notes[index]));
                             });
                       } else if (state is NoteErrorState) {
                         return const Text("Error");

@@ -13,7 +13,7 @@ ThemeData theme = ThemeData(
     useMaterial3: true,
     appBarTheme: const AppBarTheme(
       elevation: 0,
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.transparent,
       titleTextStyle: TextStyle(color: blackColor),
       centerTitle: true,
     ),
@@ -22,7 +22,7 @@ ThemeData theme = ThemeData(
     //Input Decoration
     inputDecorationTheme: InputDecorationTheme(
       focusColor: primaryColor,
-      labelStyle: TextStyle(color: blackColor),
+      labelStyle: const TextStyle(color: blackColor),
       iconColor: blackColor,
       errorStyle: const TextStyle(
         color: errorColor,
