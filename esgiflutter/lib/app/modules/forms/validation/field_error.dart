@@ -1,1 +1,1 @@
-enum FieldError { empty, invalid, badEmailFormat }
+enum FieldError { empty, invalid, badEmailFormat, unsecuredPassword }

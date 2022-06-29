@@ -1,4 +1,4 @@
-part of 'form_bloc.dart';
+part of './form_bloc.dart';
 
 abstract class FormEvent extends Equatable {
   @override

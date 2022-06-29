@@ -1,4 +1,7 @@
 import 'package:esgiflutter/app/app_routes.dart';
+import 'package:esgiflutter/app/modules/auth/bloc/auth_bloc.dart';
+import 'package:esgiflutter/app/modules/forms/bloc/form_bloc.dart';
+import 'package:esgiflutter/app/modules/forms/validation/field_error.dart';
 import 'package:esgiflutter/app/modules/notes/bloc/note_bloc.dart';
 import 'package:esgiflutter/core/di/locator.dart';
 import 'package:flutter/material.dart';
@@ -7,9 +10,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import '../../../modules/auth/bloc/auth_bloc.dart';
-import '../../../modules/auth/bloc/auth_event.dart';
-import '../../../modules/auth/bloc/auth_state.dart';
 
 class LoginForm extends StatelessWidget {
   LoginForm({Key? key}) : super(key: key);
@@ -20,30 +20,37 @@ class LoginForm extends StatelessWidget {
 
   final AuthBloc authBloc = locator<AuthBloc>();
   final NoteBloc noteBloc = locator<NoteBloc>();
-
-  void _authenticateWithEmailAndPassword(context) {
-    if (_formKey.currentState!.validate()) {
-      authBloc.add(
-          SignInRequested(_emailController.text, _passwordController.text));
-    }
-  }
+  final FormBloc formBloc = locator<FormBloc>();
 
   void _loadNotes() {
     noteBloc.add(GetAllNotesEvent());
   }
 
+  void _validateForm() {
+    print("event emit");
+    formBloc.add(LoginFormSubmittedEvent(_emailController.text, _passwordController.text));
+  }
+
   @override
   Widget build(BuildContext context) {
-    return BlocListener<AuthBloc, AuthState>(
-      listener: (context, state) {
-        if (state is Authenticated) {
-          _loadNotes();
-          Navigator.pushReplacementNamed(context, dashboardRoute);
-        } else if (state is AuthError) {
-          ScaffoldMessenger.of(context)
-              .showSnackBar(SnackBar(content: Text(state.error)));
-        }
-      },
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<AuthBloc, AuthState>(listener: (context, state) {
+          if (state is Authenticated) {
+            _loadNotes();
+            Navigator.pushReplacementNamed(context, dashboardRoute);
+          } else if (state is AuthError) {
+            ScaffoldMessenger.of(context)
+                .showSnackBar(SnackBar(content: Text(state.error)));
+          }
+        }),
+        BlocListener<FormBloc, AppFormState>(listener: (context, state) {
+          if (state is ValidFormState) {
+            authBloc.add(
+                SignInRequested(_emailController.text, _passwordController.text));
+          }
+        })
+      ],
       child: Form(
         key: _formKey,
         child: Column(
@@ -54,26 +61,51 @@ class LoginForm extends StatelessWidget {
               'assets/svg/sign-in.svg',
               height: 30.h,
             ),
-            SizedBox(height: 8.h),
+            SizedBox(height: 7.h),
             TextFormField(
               decoration: const InputDecoration(
-                  labelText: 'Email', suffixIcon: Icon(Icons.email_outlined)),
+                  labelText: 'Email', 
+                  suffixIcon: Icon(Icons.email_outlined)),
               controller: _emailController,
+              
             ),
-            SizedBox(height: 3.h),
+            BlocBuilder<FormBloc, AppFormState>(builder: ((context, state) {
+              if (state is InvalidFormState) {
+                if (state.fieldsError.containsKey("email")) {
+                  if (state.fieldsError["email"] == FieldError.badEmailFormat) {
+                    return Text("Format email invalid");
+                  } else if (state.fieldsError["email"] == FieldError.empty) {
+                    return Text("Ce champ ne peut pas être vide.");
+                  }
+                }
+              }
+              return const Text("");
+            })),
+            SizedBox(height: 1.h),
             TextFormField(
               decoration: InputDecoration(
                   labelText: AppLocalizations.of(context)!.password,
-                  suffixIcon: const Icon(Icons.visibility_off)),
+                  suffixIcon: const Icon(Icons.lock_outline)),
               controller: _passwordController,
+              obscureText: true,
             ),
-            SizedBox(height: 3.h),
+            BlocBuilder<FormBloc, AppFormState>(builder: ((context, state) {
+              if (state is InvalidFormState) {
+                if (state.fieldsError.containsKey("password")) {
+                  if (state.fieldsError["password"] == FieldError.empty) {
+                    return Text("Ce champ ne peut pas être vide.");
+                  } 
+                }
+              }
+              return const Text("");
+            })),
+            SizedBox(height: 2.h),
             ElevatedButton(
                 onPressed: () {
-                  _authenticateWithEmailAndPassword(context);
+                  _validateForm();
                 },
                 child: Text(AppLocalizations.of(context)!.signIn)),
-            SizedBox(height: 3.h),
+            SizedBox(height: 2.h),
             TextButton(
                 onPressed: () {
                   Navigator.pushReplacementNamed(context, registerRoute);

@@ -1,6 +1,5 @@
 import 'package:esgiflutter/app/app_routes.dart';
 import 'package:esgiflutter/app/modules/auth/bloc/auth_bloc.dart';
-import 'package:esgiflutter/app/modules/auth/bloc/auth_state.dart';
 import 'package:esgiflutter/app/screen/create_note/widgets/create_note_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

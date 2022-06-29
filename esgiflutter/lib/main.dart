@@ -1,4 +1,5 @@
 import 'package:esgiflutter/app/modules/auth/bloc/auth_bloc.dart';
+import 'package:esgiflutter/app/modules/forms/bloc/form_bloc.dart';
 import 'package:esgiflutter/app/modules/notes/bloc/note_bloc.dart';
 import 'package:esgiflutter/app/screen/dashboard/dashboard_screen.dart';
 import 'package:esgiflutter/app/screen/login/login_screen.dart';
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
 
   final authBloc = locator<AuthBloc>();
   final noteBloc = locator<NoteBloc>();
+  final formBloc = locator<FormBloc>();
 
   @override
   Widget build(BuildContext context) {
@@ -40,10 +42,9 @@ class MyApp extends StatelessWidget {
             routes: routes,
             builder: (_, widget) {
               return MultiBlocProvider(providers: [
-                BlocProvider<AuthBloc>(
-                  create: (_) => authBloc,
-                ),
-                BlocProvider<NoteBloc>(create: (_) => noteBloc)
+                BlocProvider<AuthBloc>(create: (_) => authBloc),
+                BlocProvider<NoteBloc>(create: (_) => noteBloc),
+                BlocProvider<FormBloc>(create: (_) => formBloc)
               ], child: widget ?? Container());
             },
             home: FutureBuilder<User?>(
