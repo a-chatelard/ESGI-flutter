@@ -51,6 +51,7 @@ ThemeData theme = ThemeData(
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         primary: primaryColor,
+        onPrimary: Colors.white,
         fixedSize: Size(100.w, 5.h),
       ),
     ),
