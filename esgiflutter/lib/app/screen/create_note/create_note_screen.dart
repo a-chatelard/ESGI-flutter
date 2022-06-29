@@ -11,20 +11,19 @@ class CreateNoteScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocListener<AuthBloc, AuthState>(
-      listener: (context, state) => {
+      listener: (context, state) {
         if (state is UnAuthenticated) {
-          Navigator.pushReplacementNamed(context, loginRoute)
+          Navigator.pushReplacementNamed(context, loginRoute);
         }
       },
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Nouvelle note'),
-        ),
-        body: Padding(
-          padding: EdgeInsets.only(top: 2.h, left: 4.h, right: 4.h),
-          child: CreateNoteForm(),
-        )
-      ),
+          appBar: AppBar(
+            title: const Text('Nouvelle note'),
+          ),
+          body: Padding(
+            padding: EdgeInsets.only(top: 2.h, left: 4.h, right: 4.h),
+            child: SingleChildScrollView(child: CreateNoteForm()),
+          )),
     );
   }
 }

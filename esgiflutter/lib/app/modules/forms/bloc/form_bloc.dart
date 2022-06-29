@@ -9,7 +9,6 @@ part './form_state.dart';
 
 class FormBloc extends Bloc<FormEvent, AppFormState> with ValidationMixin {
   FormBloc() : super(DefaultFormState()) {
-    
     on<LoginFormSubmittedEvent>((event, emit) {
       Map<String, FieldError> fieldsError = <String, FieldError>{};
       if (isFieldEmpty(event.email)) {
@@ -28,7 +27,7 @@ class FormBloc extends Bloc<FormEvent, AppFormState> with ValidationMixin {
         emit(ValidFormState());
       }
     });
-    
+
     on<RegisterFormSubmittedEvent>((event, emit) {
       Map<String, FieldError> fieldsError = <String, FieldError>{};
       if (isFieldEmpty(event.email)) {
@@ -50,5 +49,32 @@ class FormBloc extends Bloc<FormEvent, AppFormState> with ValidationMixin {
         emit(ValidFormState());
       }
     });
+
+    on<NoteFormSubmittedEvent>(((event, emit) {
+      Map<String, FieldError> fieldsError = <String, FieldError>{};
+      if (isFieldEmpty(event.title)) {
+        fieldsError.putIfAbsent("title", () => FieldError.empty);
+      }
+      if (fieldsError.isNotEmpty) {
+        emit(InvalidFormState(fieldsError));
+      } else {
+        emit(ValidFormState());
+      }
+    }));
+
+    on<ResetPasswordFormSubmittedEvent>(((event, emit) {
+      Map<String, FieldError> fieldsError = <String, FieldError>{};
+      if (isFieldEmpty(event.email)) {
+        fieldsError.putIfAbsent("email", () => FieldError.empty);
+      } else if (!isEmailValid(event.email)) {
+        fieldsError.putIfAbsent("email", () => FieldError.badEmailFormat);
+      }
+
+      if (fieldsError.isNotEmpty) {
+        emit(InvalidFormState(fieldsError));
+      } else {
+        emit(ValidFormState());
+      }
+    }));
   }
 }

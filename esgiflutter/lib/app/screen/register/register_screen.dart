@@ -11,7 +11,7 @@ class RegisterScreen extends StatelessWidget {
       appBar: AppBar(title: Text(AppLocalizations.of(context)!.signUp)),
       body: Padding(
         padding: const EdgeInsets.all(35),
-        child: RegisterForm(),
+        child: SingleChildScrollView(child: RegisterForm()),
       ),
     );
   }

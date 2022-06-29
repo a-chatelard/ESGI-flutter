@@ -21,33 +21,39 @@ class RegisterForm extends StatelessWidget {
   final NoteBloc noteBloc = locator<NoteBloc>();
   final FormBloc formBloc = locator<FormBloc>();
 
-  void _loadNotes() {
+  _loadNotes() {
     noteBloc.add(GetAllNotesEvent());
-  }   
+  }
 
-  void _validateForm() {
-    formBloc.add(RegisterFormSubmittedEvent(_emailController.text, _passwordController.text));
-  } 
+  _signUp() {
+    authBloc
+        .add(SignUpRequested(_emailController.text, _passwordController.text));
+  }
+
+  _validateForm() {
+    formBloc.add(RegisterFormSubmittedEvent(
+        _emailController.text, _passwordController.text));
+  }
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocListener(listeners: [
-      BlocListener<AuthBloc, AuthState>(
-        listener: (context, state) {
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<AuthBloc, AuthState>(listener: (context, state) {
           if (state is Authenticated) {
-            _loadNotes();   
+            _loadNotes();
             Navigator.pushReplacementNamed(context, dashboardRoute);
           } else if (state is AuthError) {
             ScaffoldMessenger.of(context)
                 .showSnackBar(SnackBar(content: Text(state.error)));
-      }}),
-      BlocListener<FormBloc, AppFormState>(listener: ((context, state) {
-        if (state is ValidFormState) {
-          authBloc.add(
-              SignUpRequested(_emailController.text, _passwordController.text));
-        }
-      }))
-    ],
+          }
+        }),
+        BlocListener<FormBloc, AppFormState>(listener: ((context, state) {
+          if (state is ValidFormState) {
+            _signUp();
+          }
+        }))
+      ],
       child: Form(
         key: _formKey,
         child: Column(
@@ -76,7 +82,7 @@ class RegisterForm extends StatelessWidget {
               }
               return const Text("");
             })),
-            SizedBox(height: 3.h),
+            SizedBox(height: 1.h),
             TextFormField(
               decoration: InputDecoration(
                   labelText: AppLocalizations.of(context)!.password),
@@ -87,20 +93,20 @@ class RegisterForm extends StatelessWidget {
                 if (state.fieldsError.containsKey("password")) {
                   if (state.fieldsError["password"] == FieldError.empty) {
                     return Text("Ce champ ne peut pas être vide.");
-                  } else if (state.fieldsError["password"] == FieldError.unsecuredPassword) {
-                    return Text("Le mot de passe doit contenir au moins 8 caractères dont un lettre majuscule et minuscule, un chiffre et un caractère spécial.");
+                  } else if (state.fieldsError["password"] ==
+                      FieldError.unsecuredPassword) {
+                    return Text(
+                        "Le mot de passe doit contenir au moins 8 caractères dont un lettre majuscule et minuscule, un chiffre et un caractère spécial.");
                   }
                 }
               }
               return const Text("");
             })),
-            SizedBox(height: 3.h),
+            SizedBox(height: 2.h),
             ElevatedButton(
-                onPressed: () {               
-                  _validateForm();
-                },
+                onPressed: _validateForm,
                 child: Text(AppLocalizations.of(context)!.confirm)),
-            SizedBox(height: 3.h),
+            SizedBox(height: 2.h),
             TextButton(
                 onPressed: () {
                   Navigator.pushReplacementNamed(context, loginRoute);

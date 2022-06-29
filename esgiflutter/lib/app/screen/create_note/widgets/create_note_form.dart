@@ -1,4 +1,6 @@
 import 'package:esgiflutter/app/config/config.dart';
+import 'package:esgiflutter/app/modules/forms/bloc/form_bloc.dart';
+import 'package:esgiflutter/app/modules/forms/validation/field_error.dart';
 import 'package:esgiflutter/app/modules/notes/bloc/note_bloc.dart';
 import 'package:esgiflutter/app/modules/notes/data/models/note.dart';
 import 'package:esgiflutter/core/di/locator.dart';
@@ -6,30 +8,44 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CreateNoteForm extends StatelessWidget {
-  CreateNoteForm({Key? key, this.folderId}) : super(key: key);
+  CreateNoteForm({Key? key}) : super(key: key);
 
   final NoteBloc noteBloc = locator<NoteBloc>();
+  final FormBloc formBloc = locator<FormBloc>();
 
-  final String? folderId;
   final _formKey = GlobalKey<FormState>();
   final _titleController = TextEditingController();
   final _descriptionController = TextEditingController();
 
-  void _createNote() {
-    if (noteBloc.state is !NoteLoadingState) {
-      var note = Note(title: _titleController.text, description: _descriptionController.text, folderId: folderId);
+  _createNote() {
+    if (noteBloc.state is! NoteLoadingState) {
+      var note = Note(
+          title: _titleController.text,
+          description: _descriptionController.text);
       noteBloc.add(CreateNoteEvent(note));
     }
   }
 
+  _validateForm() {
+    formBloc.add(NoteFormSubmittedEvent(
+        _titleController.text, _descriptionController.text));
+  }
+
   @override
   Widget build(BuildContext context) {
-    return BlocListener<NoteBloc, NoteState>(
-      listener: ((context, state) => {
-        if (state is NoteCreatedState) {
-          Navigator.pop(context)
-        }
-      }),
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<NoteBloc, NoteState>(listener: ((context, state) {
+          if (state is NoteCreatedState) {
+            Navigator.pop(context);
+          }
+        })),
+        BlocListener<FormBloc, AppFormState>(listener: ((context, state) {
+          if (state is ValidFormState) {
+            _createNote();
+          }
+        })),
+      ],
       child: Form(
         key: _formKey,
         child: Padding(
@@ -44,6 +60,16 @@ class CreateNoteForm extends StatelessWidget {
                   focusedBorder: OutlineInputBorder(),
                 ),
               ),
+              BlocBuilder<FormBloc, AppFormState>(builder: ((context, state) {
+                if (state is InvalidFormState) {
+                  if (state.fieldsError.containsKey("title")) {
+                    if (state.fieldsError["title"] == FieldError.empty) {
+                      return Text("Title cannot be empty");
+                    }
+                  }
+                }
+                return const Text("");
+              })),
               TextField(
                 controller: _descriptionController,
                 maxLines: 20,
@@ -54,7 +80,8 @@ class CreateNoteForm extends StatelessWidget {
                     hintText: "Saisir une note",
                     focusedBorder: OutlineInputBorder()),
               ),
-              ElevatedButton(onPressed: _createNote, child: const Text("Create"))
+              ElevatedButton(
+                  onPressed: _validateForm, child: const Text("Create"))
             ],
           ),
         ),

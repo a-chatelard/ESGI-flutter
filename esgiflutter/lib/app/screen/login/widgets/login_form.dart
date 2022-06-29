@@ -10,7 +10,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
 class LoginForm extends StatelessWidget {
   LoginForm({Key? key}) : super(key: key);
 
@@ -22,13 +21,18 @@ class LoginForm extends StatelessWidget {
   final NoteBloc noteBloc = locator<NoteBloc>();
   final FormBloc formBloc = locator<FormBloc>();
 
-  void _loadNotes() {
+  _loadNotes() {
     noteBloc.add(GetAllNotesEvent());
   }
 
-  void _validateForm() {
-    print("event emit");
-    formBloc.add(LoginFormSubmittedEvent(_emailController.text, _passwordController.text));
+  _signIn() {
+    authBloc
+        .add(SignInRequested(_emailController.text, _passwordController.text));
+  }
+
+  _validateForm() {
+    formBloc.add(LoginFormSubmittedEvent(
+        _emailController.text, _passwordController.text));
   }
 
   @override
@@ -46,8 +50,7 @@ class LoginForm extends StatelessWidget {
         }),
         BlocListener<FormBloc, AppFormState>(listener: (context, state) {
           if (state is ValidFormState) {
-            authBloc.add(
-                SignInRequested(_emailController.text, _passwordController.text));
+            _signIn();
           }
         })
       ],
@@ -64,10 +67,8 @@ class LoginForm extends StatelessWidget {
             SizedBox(height: 7.h),
             TextFormField(
               decoration: const InputDecoration(
-                  labelText: 'Email', 
-                  suffixIcon: Icon(Icons.email_outlined)),
+                  labelText: 'Email', suffixIcon: Icon(Icons.email_outlined)),
               controller: _emailController,
-              
             ),
             BlocBuilder<FormBloc, AppFormState>(builder: ((context, state) {
               if (state is InvalidFormState) {
@@ -94,16 +95,14 @@ class LoginForm extends StatelessWidget {
                 if (state.fieldsError.containsKey("password")) {
                   if (state.fieldsError["password"] == FieldError.empty) {
                     return Text("Ce champ ne peut pas être vide.");
-                  } 
+                  }
                 }
               }
               return const Text("");
             })),
             SizedBox(height: 2.h),
             ElevatedButton(
-                onPressed: () {
-                  _validateForm();
-                },
+                onPressed: _validateForm,
                 child: Text(AppLocalizations.of(context)!.signIn)),
             SizedBox(height: 2.h),
             TextButton(

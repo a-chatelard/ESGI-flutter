@@ -19,13 +19,13 @@ class RegisterFormSubmittedEvent extends FormEvent {
   RegisterFormSubmittedEvent(this.email, this.password);
 }
 
-class ResetPasswordFormSubmittedEvent {
+class ResetPasswordFormSubmittedEvent extends FormEvent {
   final String email;
 
   ResetPasswordFormSubmittedEvent(this.email);
 }
 
-class NoteFormSubmittedEvent {
+class NoteFormSubmittedEvent extends FormEvent {
   final String title;
   final String description;
 

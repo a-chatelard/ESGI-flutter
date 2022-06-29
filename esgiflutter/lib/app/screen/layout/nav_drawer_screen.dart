@@ -10,7 +10,7 @@ class NavDrawer extends StatelessWidget {
 
   final AuthBloc authBloc = locator<AuthBloc>();
 
-  void _signOut(context) {
+  _signOut(context) {
     authBloc.add(SignOutRequested());
   }
 
@@ -53,12 +53,9 @@ class NavDrawer extends StatelessWidget {
               },
             ),
             ListTile(
-              leading: const Icon(Icons.logout),
-              title: const Text('Disconnect'),
-              onTap: () {
-                _signOut(context);
-              },
-            )
+                leading: const Icon(Icons.logout),
+                title: const Text('Disconnect'),
+                onTap: _signOut(context))
           ],
         ),
       ),

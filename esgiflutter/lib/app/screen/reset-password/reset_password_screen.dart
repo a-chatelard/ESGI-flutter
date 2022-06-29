@@ -1,44 +1,72 @@
 import 'package:esgiflutter/app/app_routes.dart';
 import 'package:esgiflutter/app/config/config.dart';
 import 'package:esgiflutter/app/modules/auth/bloc/auth_bloc.dart';
+import 'package:esgiflutter/app/modules/forms/bloc/form_bloc.dart';
+import 'package:esgiflutter/app/modules/forms/validation/field_error.dart';
 import 'package:esgiflutter/core/di/locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sizer/sizer.dart';
+
 class ResetPasswordScreen extends StatelessWidget {
   ResetPasswordScreen({Key? key}) : super(key: key);
 
   final _emailController = TextEditingController();
   final authBloc = locator<AuthBloc>();
+  final formBloc = locator<FormBloc>();
 
-  _sendResetPassword(String email) {
-    authBloc.add(ResetPasswordRequested(email));
+  _sendResetPassword() {
+    authBloc.add(ResetPasswordRequested(_emailController.text));
+  }
+
+  _validateForm() {
+    formBloc.add(ResetPasswordFormSubmittedEvent(_emailController.text));
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<AuthBloc, AuthState>(
-      listener: ((context, state) {
-        if (state is ResetPasswordMailSent) {
-          Navigator.pushReplacementNamed(context, loginRoute);
-        }
-      }),
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<AuthBloc, AuthState>(listener: ((context, state) {
+          if (state is ResetPasswordMailSent) {
+            Navigator.pushReplacementNamed(context, loginRoute);
+          }
+        })),
+        BlocListener<FormBloc, AppFormState>(listener: (((context, state) {
+          if (state is ValidFormState) {
+            _sendResetPassword();
+          }
+        })))
+      ],
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Reset password'),
         ),
         body: Padding(
-            padding: const EdgeInsets.symmetric(vertical: defaultPadding),
+            padding: const EdgeInsets.all(defaultPadding),
             child: Column(
               children: [
                 TextField(
                   controller: _emailController,
                   decoration: const InputDecoration(label: Text('Email')),
                 ),
+                BlocBuilder<FormBloc, AppFormState>(builder: ((context, state) {
+                  if (state is InvalidFormState) {
+                    if (state.fieldsError.containsKey("email")) {
+                      if (state.fieldsError["email"] ==
+                          FieldError.badEmailFormat) {
+                        return Text("Format email invalid");
+                      } else if (state.fieldsError["email"] ==
+                          FieldError.empty) {
+                        return Text("Ce champ ne peut pas être vide.");
+                      }
+                    }
+                  }
+                  return const Text("");
+                })),
+                SizedBox(height: 5.h),
                 ElevatedButton(
-                    onPressed: () {
-                      _sendResetPassword(_emailController.text);
-                    },
-                    child: const Text("Send"))
+                    onPressed: _validateForm, child: const Text("Send"))
               ],
             )),
       ),
