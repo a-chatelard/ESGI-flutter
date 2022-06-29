@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:esgiflutter/app/modules/auth/bloc/auth_state.dart';
 import 'package:esgiflutter/app/modules/notes/data/repository/note_repository.dart';
 
 import '../data/models/note.dart';
@@ -12,6 +11,7 @@ class NoteBloc extends Bloc<NoteEvent, NoteState> {
   final NoteRepository noteRepository = NoteRepository();
 
   NoteBloc() : super(InitialNoteState()) {
+
     on<CreateNoteEvent>((event, emit) async {
       emit(NoteLoadingState());
       try {
@@ -21,6 +21,7 @@ class NoteBloc extends Bloc<NoteEvent, NoteState> {
         emit(NoteErrorState(e.toString()));
       }
     });
+
     on<UpdateNoteEvent>((event, emit) async {
       try {
         await noteRepository.update(event.note);
@@ -29,6 +30,7 @@ class NoteBloc extends Bloc<NoteEvent, NoteState> {
         emit(NoteErrorState(e.toString()));
       }
     });
+
     on<DeleteNoteEvent>((event, emit) async {
       emit(NoteLoadingState());
       try {
@@ -38,6 +40,7 @@ class NoteBloc extends Bloc<NoteEvent, NoteState> {
         emit(NoteErrorState(e.toString()));
       }
     });
+    
     on<GetAllNotesEvent>((event, emit) async {
       try {
         var notes = await noteRepository.getNotes();

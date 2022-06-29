@@ -50,22 +50,22 @@ class DashboardScreen extends StatelessWidget {
                   const TextField(
                     decoration: InputDecoration(
                         labelText: 'Recherche',
-                        prefixIcon: Icon(Icons.search),
-                        suffixIcon: Icon(Icons.mic)),
+                        prefixIcon: Icon(Icons.search))
                   ),
                   SizedBox(height: 1.h),
                   SizedBox(
-                    height: 30.h,
+                    height: 77.h,
                     child: BlocBuilder<NoteBloc, NoteState>(
                         builder: (context, state) {
                       if (state is NoteListSuccessState) {
-                        return ListView.builder(
+                        if (state.notes.isNotEmpty) {
+                          return ListView.builder(
                             scrollDirection: Axis.vertical,
                             itemCount: state.notes.length,
                             itemBuilder: (context, index) {
                               return Slidable(
                                   key: ValueKey(index),
-                                  startActionPane: ActionPane(
+                                  endActionPane: ActionPane(
                                     motion: const ScrollMotion(),
                                     children: [
                                       SlidableAction(
@@ -79,18 +79,30 @@ class DashboardScreen extends StatelessWidget {
                                   ),
                                   child: NoteCard(note: state.notes[index]));
                             });
+                        } else {
+                          return Center(child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Text("Vous n'avez pas encore de notes..."),
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pushNamed(context, addNoteRoute);
+                                }, 
+                                child: const Text("Créez-en une !"))
+                            ],
+                          ));
+                        }
                       } else if (state is NoteErrorState) {
                         return const Text("Error");
                       }
                       noteBloc.add(GetAllNotesEvent());
-                      return const CircularProgressIndicator();
+                      return Center(
+                        child: SizedBox(
+                          height: 10.h, 
+                          width: 10.h,
+                          child: const CircularProgressIndicator()));
                     }),
-                  ),
-                  ElevatedButton(
-                      onPressed: () {
-                        _signOut(context);
-                      },
-                      child: null)
+                  )
                 ],
               ),
             ),
@@ -101,20 +113,10 @@ class DashboardScreen extends StatelessWidget {
           fit: StackFit.expand,
           children: [
             Positioned(
-              left: 30,
-              bottom: 20,
-              child: FloatingActionButton(
-                heroTag: 'back',
-                onPressed: () {},
-                child: const Icon(
-                  Icons.create_new_folder,
-                ),
-              ),
-            ),
-            Positioned(
               bottom: 20,
               right: 30,
               child: FloatingActionButton(
+                backgroundColor: Colors.blueAccent,
                 heroTag: 'next',
                 onPressed: () {
                   Navigator.pushNamed(context, addNoteRoute);

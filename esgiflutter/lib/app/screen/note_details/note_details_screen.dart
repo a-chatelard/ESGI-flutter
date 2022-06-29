@@ -4,6 +4,7 @@ import 'package:esgiflutter/app/modules/notes/data/models/note.dart';
 import 'package:esgiflutter/core/di/locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sizer/sizer.dart';
 
 class NoteDetailsScreen extends StatelessWidget {
   NoteDetailsScreen({Key? key}) : super(key: key);
@@ -37,10 +38,10 @@ class NoteDetailsScreen extends StatelessWidget {
       }),
       child: Scaffold(
         appBar: AppBar(
-          title: Text(note.id.toString()),
+          title: Text("Modifier la note"),
         ),
         body: Padding(
-          padding: const EdgeInsets.symmetric(vertical: defaultPadding),
+          padding: EdgeInsets.only(top: 2.h, left: 4.h, right: 4.h),
           child: Form(
             key: _formKey,
             child: Column(
@@ -51,7 +52,6 @@ class NoteDetailsScreen extends StatelessWidget {
                   decoration: const InputDecoration(
                     hintText: 'Titre de la note',
                     focusedBorder: OutlineInputBorder(),
-                    border: InputBorder.none,
                   ),
                 ),
                 TextField(

@@ -8,9 +8,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class CreateNoteForm extends StatelessWidget {
   CreateNoteForm({Key? key, this.folderId}) : super(key: key);
 
-  NoteBloc noteBloc = locator<NoteBloc>();
+  final NoteBloc noteBloc = locator<NoteBloc>();
 
-  String? folderId;
+  final String? folderId;
   final _formKey = GlobalKey<FormState>();
   final _titleController = TextEditingController();
   final _descriptionController = TextEditingController();
@@ -42,7 +42,6 @@ class CreateNoteForm extends StatelessWidget {
                 decoration: const InputDecoration(
                   hintText: 'Titre de la note',
                   focusedBorder: OutlineInputBorder(),
-                  border: InputBorder.none,
                 ),
               ),
               TextField(

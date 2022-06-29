@@ -9,7 +9,7 @@ class DefaultFormState extends FormState {
 }
 
 class InvalidFormState extends FormState {
-  Map<String, FieldError> fieldsError = <String, FieldError>{};
+  final Map<String, FieldError> fieldsError = <String, FieldError>{};
 
   @override
   List<Object?> get props => [fieldsError];

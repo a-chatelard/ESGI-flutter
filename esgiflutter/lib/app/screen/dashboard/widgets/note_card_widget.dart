@@ -1,7 +1,6 @@
 
 import 'package:esgiflutter/app/app_routes.dart';
 import 'package:esgiflutter/app/modules/notes/data/models/note.dart';
-import 'package:esgiflutter/app/screen/note_details/note_details_screen.dart';
 import 'package:flutter/material.dart';
 
 class NoteCard extends StatelessWidget {

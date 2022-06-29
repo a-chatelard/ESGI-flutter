@@ -38,8 +38,6 @@ class FirestoreNoteProvider {
 
   Future deleteNote(Note note) async {
     _userId = FirebaseAuth.instance.currentUser?.uid;
-    print(_userId);
-    print(note.id);
     await notesRef.doc(_userId).collection("notes").doc(note.id).delete();
   }
 }

@@ -4,6 +4,7 @@ import 'package:esgiflutter/app/modules/auth/bloc/auth_state.dart';
 import 'package:esgiflutter/app/screen/create_note/widgets/create_note_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sizer/sizer.dart';
 
 class CreateNoteScreen extends StatelessWidget {
   const CreateNoteScreen({Key? key}) : super(key: key);
@@ -20,7 +21,10 @@ class CreateNoteScreen extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Nouvelle note'),
         ),
-        body: CreateNoteForm()
+        body: Padding(
+          padding: EdgeInsets.only(top: 2.h, left: 4.h, right: 4.h),
+          child: CreateNoteForm(),
+        )
       ),
     );
   }

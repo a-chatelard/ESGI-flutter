@@ -34,7 +34,7 @@ class NavDrawer extends StatelessWidget {
                 color: blackColor,
               ),
               child: Text(
-                'Drawer Header',
+                'My notes',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 24,
@@ -45,12 +45,15 @@ class NavDrawer extends StatelessWidget {
               leading: const Icon(Icons.message),
               title: const Text('Home'),
               onTap: () {
-                Navigator.pushNamed(context, dashboardRoute);
+                Navigator.pushReplacementNamed(context, dashboardRoute);
               },
             ),
-            const ListTile(
-              leading: Icon(Icons.settings),
-              title: Text('Edit password'),
+            ListTile(
+              leading: const Icon(Icons.settings),
+              title: const Text('Edit password'),
+              onTap: () {
+                Navigator.pushNamed(context, resetPasswordRoute);
+              },
             ),
             ListTile(
               leading: const Icon(Icons.logout),
