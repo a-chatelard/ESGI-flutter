@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:sizer/sizer.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DashboardScreen extends StatelessWidget {
   DashboardScreen({Key? key}) : super(key: key);
@@ -39,13 +40,13 @@ class DashboardScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text("Dossiers",
+                     Text(AppLocalizations.of(context)!.folder,
                         style: TextStyle(color: Colors.black, fontSize: 25.0)),
                     SizedBox(height: 1.h),
-                    const TextField(
+                     TextField(
                         decoration: InputDecoration(
-                            labelText: 'Recherche',
-                            prefixIcon: Icon(Icons.search))),
+                            labelText: AppLocalizations.of(context)!.search,
+                            prefixIcon: const Icon(Icons.search))),
                     SizedBox(height: 1.h),
                     SizedBox(
                       height: 77.h,
@@ -68,7 +69,7 @@ class DashboardScreen extends StatelessWidget {
                                               },
                                               backgroundColor: Colors.red,
                                               icon: Icons.delete,
-                                              label: "Supprimer"),
+                                              label: AppLocalizations.of(context)!.delete),
                                         ],
                                       ),
                                       child:
@@ -79,19 +80,18 @@ class DashboardScreen extends StatelessWidget {
                                 child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                const Text(
-                                    "Vous n'avez pas encore de notes..."),
+                                Text(AppLocalizations.of(context)!.noNote),
                                 TextButton(
                                     onPressed: () {
                                       Navigator.pushNamed(
                                           context, addNoteRoute);
                                     },
-                                    child: const Text("Créez-en une !"))
+                                    child: Text(AppLocalizations.of(context)!.createNote))
                               ],
                             ));
                           }
                         } else if (state is NoteErrorState) {
-                          return const Text("Error");
+                          return Text(AppLocalizations.of(context)!.error);
                         }
                         noteBloc.add(GetAllNotesEvent());
                         return Center(

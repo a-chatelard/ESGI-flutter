@@ -74,9 +74,9 @@ class LoginForm extends StatelessWidget {
               if (state is InvalidFormState) {
                 if (state.fieldsError.containsKey("email")) {
                   if (state.fieldsError["email"] == FieldError.badEmailFormat) {
-                    return Text("Format email invalid");
+                    return Text(AppLocalizations.of(context)!.badFormatEmail);
                   } else if (state.fieldsError["email"] == FieldError.empty) {
-                    return Text("Ce champ ne peut pas être vide.");
+                    return Text(AppLocalizations.of(context)!.emptyField);
                   }
                 }
               }
@@ -94,7 +94,7 @@ class LoginForm extends StatelessWidget {
               if (state is InvalidFormState) {
                 if (state.fieldsError.containsKey("password")) {
                   if (state.fieldsError["password"] == FieldError.empty) {
-                    return Text("Ce champ ne peut pas être vide.");
+                    return Text(AppLocalizations.of(context)!.emptyField);
                   }
                 }
               }

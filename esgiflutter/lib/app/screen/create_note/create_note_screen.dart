@@ -4,6 +4,8 @@ import 'package:esgiflutter/app/screen/create_note/widgets/create_note_form.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class CreateNoteScreen extends StatelessWidget {
   const CreateNoteScreen({Key? key}) : super(key: key);
@@ -18,7 +20,7 @@ class CreateNoteScreen extends StatelessWidget {
       },
       child: Scaffold(
           appBar: AppBar(
-            title: const Text('Nouvelle note'),
+            title: Text(AppLocalizations.of(context)!.newNote),
           ),
           body: Padding(
             padding: EdgeInsets.only(top: 2.h, left: 4.h, right: 4.h),

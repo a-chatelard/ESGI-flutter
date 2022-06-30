@@ -7,6 +7,8 @@ import 'package:esgiflutter/core/di/locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class ResetPasswordScreen extends StatelessWidget {
   ResetPasswordScreen({Key? key}) : super(key: key);
@@ -40,7 +42,7 @@ class ResetPasswordScreen extends StatelessWidget {
       ],
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Reset password'),
+          title: Text(AppLocalizations.of(context)!.resetPassword),
         ),
         body: Padding(
             padding: const EdgeInsets.all(defaultPadding),
@@ -55,10 +57,10 @@ class ResetPasswordScreen extends StatelessWidget {
                     if (state.fieldsError.containsKey("email")) {
                       if (state.fieldsError["email"] ==
                           FieldError.badEmailFormat) {
-                        return Text("Format email invalid");
+                        return Text(AppLocalizations.of(context)!.badFormatEMAIL);
                       } else if (state.fieldsError["email"] ==
                           FieldError.empty) {
-                        return Text("Ce champ ne peut pas être vide.");
+                        return Text(AppLocalizations.of(context)!.emptyField);
                       }
                     }
                   }
@@ -66,7 +68,7 @@ class ResetPasswordScreen extends StatelessWidget {
                 })),
                 SizedBox(height: 5.h),
                 ElevatedButton(
-                    onPressed: _validateForm, child: const Text("Send"))
+                    onPressed: _validateForm, child: Text(AppLocalizations.of(context)!.send))
               ],
             )),
       ),

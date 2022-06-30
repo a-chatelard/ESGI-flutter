@@ -4,6 +4,8 @@ import 'package:esgiflutter/app/modules/auth/bloc/auth_bloc.dart';
 import 'package:esgiflutter/core/di/locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class NavDrawer extends StatelessWidget {
   NavDrawer({Key? key}) : super(key: key);
@@ -26,13 +28,13 @@ class NavDrawer extends StatelessWidget {
         child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
-            const DrawerHeader(
-              decoration: BoxDecoration(
+             DrawerHeader(
+              decoration: const BoxDecoration(
                 color: blackColor,
               ),
               child: Text(
-                'My notes',
-                style: TextStyle(
+                AppLocalizations.of(context)!.myNote,
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 24,
                 ),
@@ -40,21 +42,21 @@ class NavDrawer extends StatelessWidget {
             ),
             ListTile(
               leading: const Icon(Icons.message),
-              title: const Text('Home'),
+              title: Text(AppLocalizations.of(context)!.home),
               onTap: () {
                 Navigator.pushReplacementNamed(context, dashboardRoute);
               },
             ),
             ListTile(
               leading: const Icon(Icons.settings),
-              title: const Text('Edit password'),
+              title: Text(AppLocalizations.of(context)!.editPassword),
               onTap: () {
                 Navigator.pushNamed(context, resetPasswordRoute);
               },
             ),
             ListTile(
                 leading: const Icon(Icons.logout),
-                title: const Text('Disconnect'),
+                title: Text(AppLocalizations.of(context)!.disconnect),
                 onTap: _signOut(context))
           ],
         ),

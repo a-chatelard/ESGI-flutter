@@ -6,6 +6,7 @@ import 'package:esgiflutter/core/di/locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class NoteDetailsScreen extends StatelessWidget {
   NoteDetailsScreen({Key? key}) : super(key: key);
@@ -52,7 +53,7 @@ class NoteDetailsScreen extends StatelessWidget {
       ],
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Modifier la note"),
+          title: Text(AppLocalizations.of(context)!.editNote),
         ),
         body: SingleChildScrollView(
           child: Padding(
@@ -64,8 +65,8 @@ class NoteDetailsScreen extends StatelessWidget {
                   TextField(
                     controller: _titleController,
                     maxLength: 35,
-                    decoration: const InputDecoration(
-                      hintText: 'Titre de la note',
+                    decoration: InputDecoration(
+                      hintText: AppLocalizations.of(context)!.title,
                       focusedBorder: OutlineInputBorder(),
                     ),
                   ),
@@ -74,7 +75,7 @@ class NoteDetailsScreen extends StatelessWidget {
                     if (state is InvalidFormState) {
                       if (state.fieldsError.containsKey("title")) {
                         if (state.fieldsError["title"] == FieldError.empty) {
-                          return Text("Title cannot be empty");
+                          return Text(AppLocalizations.of(context)!.titleEmpty);
                         }
                       }
                     }
@@ -85,13 +86,13 @@ class NoteDetailsScreen extends StatelessWidget {
                     maxLines: 20,
                     maxLength: 100,
                     keyboardType: TextInputType.multiline,
-                    decoration: const InputDecoration(
+                    decoration:  InputDecoration(
                         border: InputBorder.none,
-                        hintText: "Saisir une note",
-                        focusedBorder: OutlineInputBorder()),
+                        hintText: AppLocalizations.of(context)!.enterNote,
+                        focusedBorder: const OutlineInputBorder()),
                   ),
                   ElevatedButton(
-                      onPressed: _validateForm, child: const Text("Update"))
+                      onPressed: _validateForm, child:  Text(AppLocalizations.of(context)!.updateNote))
                 ],
               ),
             ),

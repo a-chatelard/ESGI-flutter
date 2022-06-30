@@ -74,9 +74,9 @@ class RegisterForm extends StatelessWidget {
               if (state is InvalidFormState) {
                 if (state.fieldsError.containsKey("email")) {
                   if (state.fieldsError["email"] == FieldError.badEmailFormat) {
-                    return Text("Format email invalid");
+                    return Text(AppLocalizations.of(context)!.badFormatEmail);
                   } else if (state.fieldsError["email"] == FieldError.empty) {
-                    return Text("Ce champ ne peut pas être vide.");
+                    return Text(AppLocalizations.of(context)!.emptyField);
                   }
                 }
               }
@@ -92,11 +92,11 @@ class RegisterForm extends StatelessWidget {
               if (state is InvalidFormState) {
                 if (state.fieldsError.containsKey("password")) {
                   if (state.fieldsError["password"] == FieldError.empty) {
-                    return Text("Ce champ ne peut pas être vide.");
+                    return Text(AppLocalizations.of(context)!.emptyField);
                   } else if (state.fieldsError["password"] ==
                       FieldError.unsecuredPassword) {
                     return Text(
-                        "Le mot de passe doit contenir au moins 8 caractères dont un lettre majuscule et minuscule, un chiffre et un caractère spécial.");
+                        AppLocalizations.of(context)!.badFormatPassword);
                   }
                 }
               }
