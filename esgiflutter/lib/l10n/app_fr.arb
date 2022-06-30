@@ -1,30 +1,26 @@
 {
-  "helloWorld": "Bonjour le monde!",
-  "@helloWorld": {
-    "description": "Le salut conventionnel du nouveau développpeur."
-  },
-  "signIn": "Connexion",
-  "signUp": "Inscription",
-  "signOut": "Déconnexion",
   "add": "Ajouter",
   "confirm": "Confirmer",
-  "password": "Mot de passe",
-  "noAccount": "Pas encore de compte ? Créez-en un",
-  "haveAccount": "Déjà inscrit(e) ? Connectez-vous",
-  "forgotPassword": "Mot de passe oublié",
-  "home": "Accueil",
-  "note":"Notes",
   "createNote": "Créez-en une",
-  "noNote": "Vous n'avez pas encore de notes...",
   "delete": "Supprimer",
-  "search": "Rechercher",
-  "folder": "Dossier",
   "error": "Erreur",
-  "errorEmail": "",
+  "folder": "Dossier",
+  "forgotPassword": "Mot de passe oublié",
+  "haveAccount": "Déjà inscrit(e) ? Connectez-vous",
+  "home": "Accueil",
+  "noAccount": "Pas encore de compte ? Créez-en un",
+  "noNote": "Vous n'avez pas encore de notes...",
+  "password": "Mot de passe",
+  "search": "Rechercher",
+  "signIn": "Connexion",
+  "signOut": "Déconnexion",
+  "signUp": "Inscription",
   "resetPassword": "Réinitialiser le mot de passe",
   "send": "Envoyer",
   "emptyField": "Ce champ ne peut pas être vide.",
   "editNote": "Modifier la note",
+  "title": "Titre",
+  "titleEmpty": "Le titre ne peut pas être vide",
   "enterNote": "Saisir une note",
   "updateNote": "Mettre à jour",
   "badFormatEmail":"Le format de l'adresse email n'est pas correcte",
@@ -32,8 +28,6 @@
   "myNote": "Mes notes",
   "editPassword": "Modifier le mot de passe",
   "disconnect": "Se déconnecter",
-  "newNote": "Ajouter une nouvelle note"
-
-
-
+  "newNote": "Ajouter une nouvelle note",
+  "note":"Notes"
 }

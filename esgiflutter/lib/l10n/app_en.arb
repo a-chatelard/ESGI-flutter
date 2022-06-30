@@ -1,7 +1,4 @@
 {
-  "@helloWorld": {
-    "description": "The conventional newborn programmer greeting."
-  },
   "add": "Add",
   "confirm": "Confirm",
   "createNote": "Create one",
@@ -10,7 +7,6 @@
   "folder": "Folder",
   "forgotPassword": "Forgot password",
   "haveAccount": "Already have an account ? Sign in",
-  "helloWorld": "Hello World!",
   "home": "Home",
   "noAccount": "Don't have an accout ? Sign up",
   "noNote": "You don't have any notes yet...",
@@ -23,8 +19,8 @@
   "send": "Send",
   "emptyField": "This field cannot be empty.",
   "editNote": "Edit the note",
-  "title": "Titre",
-  "titleEmpty": "Le titre ne peut être vide",
+  "title": "Title",
+  "titleEmpty": "The title cannot be empty",
   "enterNote": "Enter a note",
   "updateNote": "Update note",
   "badFormatEmail":"Format email invalid",
@@ -32,5 +28,6 @@
   "myNote": "Mes notes",
   "editPassword": "Edit password",
   "disconnect": "Disconnect",
-  "newNote": "Add a new note"
+  "newNote": "Add a new note",
+  "note":"Notes"
 }

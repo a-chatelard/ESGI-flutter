@@ -57,7 +57,7 @@ class NavDrawer extends StatelessWidget {
             ListTile(
                 leading: const Icon(Icons.logout),
                 title: Text(AppLocalizations.of(context)!.disconnect),
-                onTap: _signOut(context))
+                onTap: () { _signOut(context); })
           ],
         ),
       ),

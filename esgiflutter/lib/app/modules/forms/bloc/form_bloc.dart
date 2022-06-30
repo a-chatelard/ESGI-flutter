@@ -26,6 +26,7 @@ class FormBloc extends Bloc<FormEvent, AppFormState> with ValidationMixin {
       } else {
         emit(ValidFormState());
       }
+      emit(DefaultFormState());
     });
 
     on<RegisterFormSubmittedEvent>((event, emit) {
@@ -48,6 +49,7 @@ class FormBloc extends Bloc<FormEvent, AppFormState> with ValidationMixin {
       } else {
         emit(ValidFormState());
       }
+      emit(DefaultFormState());
     });
 
     on<NoteFormSubmittedEvent>(((event, emit) {
@@ -60,6 +62,7 @@ class FormBloc extends Bloc<FormEvent, AppFormState> with ValidationMixin {
       } else {
         emit(ValidFormState());
       }
+      emit(DefaultFormState());
     }));
 
     on<ResetPasswordFormSubmittedEvent>(((event, emit) {
@@ -75,6 +78,7 @@ class FormBloc extends Bloc<FormEvent, AppFormState> with ValidationMixin {
       } else {
         emit(ValidFormState());
       }
+      emit(DefaultFormState());
     }));
   }
 }

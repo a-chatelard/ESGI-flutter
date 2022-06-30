@@ -57,7 +57,7 @@ class ResetPasswordScreen extends StatelessWidget {
                     if (state.fieldsError.containsKey("email")) {
                       if (state.fieldsError["email"] ==
                           FieldError.badEmailFormat) {
-                        return Text(AppLocalizations.of(context)!.badFormatEMAIL);
+                            return Text(AppLocalizations.of(context)!.badFormatEmail);
                       } else if (state.fieldsError["email"] ==
                           FieldError.empty) {
                         return Text(AppLocalizations.of(context)!.emptyField);
